@@ -1,14 +1,24 @@
-package main
-
 import (
 	"fmt"
-	"io"
 	"os"
+	"path/filepath"
 
-	"github.com/canonical/ubuntu-image/internal/commands"
-	"github.com/canonical/ubuntu-image/internal/helper"
-	"github.com/canonical/ubuntu-image/internal/statemachine"
-	"github.com/jessevdk/go-flags"
+	"github.com/spf13/cobra"
+	"github.com/ubuntu/image"
+	"github.com/ubuntu/image/partition"
+	"github.com/ubuntu/image/types"
+)
+
+var (
+	cmd = &cobra.Command{
+		Use:   "mros-image",
+		Short: "Create an mros image",
+		RunE:  runCreate,
+	}
+
+	outputFile string
+	inputDir   string
+	size       int
 )
 
 // Version holds the ubuntu-image version number
